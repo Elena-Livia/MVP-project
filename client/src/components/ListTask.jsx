@@ -1,10 +1,10 @@
-import React from 'react';
+// import React from 'react';
 
-var ListTask = (props) => (
-<div>
-{props.task}
-</div>
-)
+// var ListTask = (props) => (
+// <div>
+// {props.task}
+// </div>
+// )
 
 
-export default ListTask;
+// export default ListTask;
