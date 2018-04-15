@@ -30,8 +30,9 @@ class App extends React.Component {
 
 
   submit() {
+    //console.log(this.state);
     $.ajax({
-      url: '/tasks', 
+      url: '/list', 
       type: 'POST',
       data: this.state,
       success: (data) => {

@@ -18,6 +18,15 @@ var taskSchema = mongoose.Schema({
 
 var Task = mongoose.model('Task', taskSchema);
 
+var selectAll = function(callback) {
+  Task.find({}, function(err, tasks) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, tasks);
+    }
+  });
+};
 
-
+module.exports.selectAll = selectAll;
 module.exports.Task = Task;

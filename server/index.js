@@ -4,12 +4,13 @@ var db = require('../database/index.js');
 
 var app = express();
 
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 
 app.post('/list', function (req, res) {
-	var myTasks = new taskSchema ({
+	console.log(req.body);
+	var myTasks = new db.Task ({
 		task: req.body['states[task]'],
 		date: req.body['states[date]']
 	});
@@ -26,10 +27,15 @@ app.post('/list', function (req, res) {
 
 app.get('/list', function (req, res) {
 	db.selectAll(function (err,data) {
+		console.log(data[data.length-1].task);
 		if (err) {
 			res.sendStatus(500);
 		}
-		res.send('ok');
+		var todos=[];
+		for (var i =0; i<data.length; i++) {
+			todos.push({task:data[i].task,dat:data[i].date})
+		}
+		res.send(todos);
 	});
 }); 
 	
