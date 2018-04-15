@@ -44,7 +44,7 @@ Once the project moves into development, the press release can be used as a touc
 
 ## How to Get Started ##
 
-  The app is user-friendly and interactive. It is built using Angular Js, Express and MongoDB.
+  The app is user-friendly and interactive. It is built using React, Express and MongoDB.
 
 
 ## Customer Quote ##

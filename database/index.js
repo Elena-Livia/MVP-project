@@ -8,7 +8,7 @@ db.on('error', function() {
 });
 
 db.once('open', function() {
-  console.log('connected successfully');
+  console.log('connected to the database');
 });
 
 var taskSchema = mongoose.Schema({

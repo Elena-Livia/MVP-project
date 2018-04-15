@@ -10,14 +10,13 @@ class App extends React.Component {
       states:{
         task: "",
         date: ""
-      }
+      },
+      data: ""
     }
-   
     this.submit = this.submit.bind(this)
     this.onChange = this.onChange.bind(this)
-
+    this.get = this.get.bind(this)
   }
-
 
   onChange(e){
     var states = this.state.states;
@@ -27,31 +26,50 @@ class App extends React.Component {
     this.setState({states});
   }
 
-
-
   submit() {
-    //console.log(this.state);
     $.ajax({
       url: '/list', 
       type: 'POST',
       data: this.state,
       success: (data) => {
-        console.log("post",data)
+        console.log("post",data);
+        }
+    });
+  }
+
+  get() {
+    $.ajax({
+      url: '/list', 
+      type: 'GET',
+      data: this.state,
+      success: (data) => {
+        this.setState({data: data});
         }
     });
   }
 
    render () {
-    return (
+    if (this.state.data !== "") {
+      return ( 
+        <div> <center>{ this.state.data.map((item) =>
+         <div> {item.task} </div>
+       )} 
+        </center></div>)
+    } else {
+      return (
       <div>
        <center>
-        <h1>Add a task! :)</h1>
-          <p>Task: <input type="text" name="task" placeholder="Write your task here" value={this.state.task}  onChange={this.onChange} /></p><br/>
-          <p>Deadline: <input type="text" name="date" placeholder="Enter the date here" value={this.state.date} onChange={this.onChange}/></p><br/>
-        <button onClick={this.submit}>Submit</button>
+        <h1>Add a task!</h1>
+          <p>Task: <input type = "text" name = "task" placeholder = "Write your task here" value = {this.state.task}  onChange = {this.onChange} /></p>
+          <br/>
+          <p>Date: <input type = "text" name = "date" placeholder = "Enter the date here" value = {this.state.date} onChange = {this.onChange}/></p>
+          <br/>
+        <button onClick = {this.submit}>Submit</button>
+        <h3>Press <a onClick = {this.get} href = "#">here</a> to see your list</h3>
        </center>
       </div>)
-  }
+   }
+ }   
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
