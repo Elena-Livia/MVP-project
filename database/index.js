@@ -12,12 +12,11 @@ db.once('open', function() {
 });
 
 var taskSchema = mongoose.Schema({
-
   task: String,
   date: String
 });
 
-var Task = mongoose.model('Task', repoSchema);
+var Task = mongoose.model('Task', taskSchema);
 
 
 

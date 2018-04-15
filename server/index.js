@@ -8,11 +8,11 @@ var app = express();
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 
-app.post('/tasks', function (req, res) {
+app.post('/list', function (req, res) {
 	var myTasks = new taskSchema ({
-		task: req.body['state[task]'],
-		date: req.body['state[date]']
-	})
+		task: req.body['states[task]'],
+		date: req.body['states[date]']
+	});
 
 	myTasks.save(function(error,data){
 	  if(error){
@@ -20,17 +20,18 @@ app.post('/tasks', function (req, res) {
 		}
 		 res.status(200).send(data);
 	})
-}
+});
  
 
 
-app.get('/tasks', function (req, res) {
-	tasks.selectAll(function (err,data) {
+app.get('/list', function (req, res) {
+	db.selectAll(function (err,data) {
 		if (err) {
 			res.sendStatus(500);
 		}
 		res.send('ok');
-	}) 
+	});
+}); 
 	
 	
 
