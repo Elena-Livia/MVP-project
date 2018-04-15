@@ -1,39 +1,40 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
-var db = require('../database-mongo/index.js')
+var db = require('../database/index.js');
 
 var app = express();
 
 
-app.use(express.static(__dirname + '/../angular-client'));
-app.use(express.static(__dirname + '/../node_modules'));
+app.use(express.static(__dirname + '/../client/dist'));
+app.use(bodyParser.json());
 
-app.get('/items', function (req, res) {
-  res.json([
-    "item1",
-    "item2"    
-  ]);
-});
+app.post('/tasks', function (req, res) {
+	var myTasks = new taskSchema ({
+		task: req.body['state[task]'],
+		date: req.body['state[date]']
+	})
 
-app.post('/', function(req,res) {
-  var records = new itemSchema ({
-    task: req.body.task,
-    priority: req.body.priority,
-    date: req.body.date,
-    status: req.body.status
-  });
+	myTasks.save(function(error,data){
+	  if(error){
+		 res.status(404);
+		}
+		 res.status(200).send(data);
+	})
+}
+ 
 
-  records.save().then(task => {
-  	res.send ('New task saved to the database')
-  }).catch(err => {
-  	res.status(400).send('The new task could not be saved')
-  });
-});
 
-var port = process.env.PORT || 3000;
+app.get('/tasks', function (req, res) {
+	tasks.selectAll(function (err,data) {
+		if (err) {
+			res.sendStatus(500);
+		}
+		res.send('ok');
+	}) 
+	
+	
 
 app.listen(3000, function() {
-  console.log('listening on port 3000!');
+  console.log('listening on port 3000');
 });
 
